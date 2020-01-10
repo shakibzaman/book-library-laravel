@@ -6,9 +6,9 @@
     "type": "project",
     "require": {
         "php": "^7.2",
-        "fideloper/proxy": "^4.0",
         "doctrine/dbal": "^2.9",
-        "intervention/image": "^2.4",
+        "fideloper/proxy": "^4.0",
+        "intervention/image": "^2.5",
         "laravel/framework": "^6.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^6.0",

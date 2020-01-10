@@ -43,7 +43,7 @@ class ChaptersController extends Controller
         if (! Gate::allows('users_manage')) {
             return abort(401);
         }
-        $chapter=Chapter::find($id);
+        $chapter=Chapter::with('bookName')->find($id);
         return view('admin.chapters.show',compact('chapter'));
 
     }
@@ -53,8 +53,11 @@ class ChaptersController extends Controller
         if (! Gate::allows('users_manage')) {
             return abort(401);
         }
-        $chapter=Chapter::find($id);
+        $chapter=Chapter::with('bookName')->find($id);
         $books=Book::all()->pluck('name','id')->prepend(trans('global.pleaseSelect'),'');
+//        return response()->json([
+//           'chapter'=>$chapter
+//        ],200);
         return view('admin.chapters.edit',compact('chapter','books'));
     }
 
@@ -73,6 +76,13 @@ class ChaptersController extends Controller
 
     public function destroy($id)
     {
+        if (! Gate::allows('users_manage')) {
+            return abort(401);
+        }
+        $chapter=Chapter::find($id);
+        $chapter->delete();
+        return redirect()->route('admin.chapters.index');
+
 
     }
 }

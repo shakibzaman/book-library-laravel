@@ -23,10 +23,10 @@
                     </p>
                 </div>
                 <div class="form-group {{ $errors->has('book_id') ? 'has-error' : '' }}">
-                    <label for="book">{{ trans('cruds.books.fields.name') }}</label>
-                    <select name="book_id" id="book" class="form-control select2">
+                    <label for="book_name">{{ trans('cruds.books.title_singular') }}</label>
+                    <select name="book_id" id="book_name" class="form-control select2">
                         @foreach($books as $id => $book)
-                            <option value="{{ $id }}" {{ (isset($book) && $book->book ? $expense->book->id : old('book_id')) == $id ? 'selected' : '' }}>{{ $book }}</option>
+                            <option value="{{ $id }}" {{ old('name', isset($chapter->bookname) ? $chapter->bookname->name : '') }}>{{ $book }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('book_id'))
@@ -35,6 +35,7 @@
                         </em>
                     @endif
                 </div>
+
                 <div>
                     <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
                 </div>

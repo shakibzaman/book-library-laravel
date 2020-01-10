@@ -10,6 +10,6 @@ class Book extends Model
 
     public function chaptername()
     {
-        return $this->hasMany('App\Chapter');
+        return $this->hasMany('App\Chapter','book_id');
     }
 }
