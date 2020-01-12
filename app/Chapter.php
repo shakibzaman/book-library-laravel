@@ -11,4 +11,8 @@ class Chapter extends Model
     {
         return $this->belongsTo('App\Book','book_id');
     }
+//    public function subrulename()
+//    {
+//        return $this->hasMany('App\SubRule','chap_id');
+//    }
 }

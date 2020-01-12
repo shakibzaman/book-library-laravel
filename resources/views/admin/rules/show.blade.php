@@ -31,7 +31,7 @@
                             {{ trans('cruds.rules.fields.image') }}
                         </th>
                         <td>
-                            {{ $rule->image }}
+                            <img src="{{Storage::url($rule->image)}}" alt="" width="500" height="300">
                         </td>
                     </tr>
                     <tr>

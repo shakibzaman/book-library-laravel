@@ -22,22 +22,6 @@
                     </p>
                 </div>
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <label for="name">{{ trans('cruds.books.title_singular') }}*</label>
-                    <select name="book_id" id="book_id" class="form-control select2">
-                        @foreach($books as $id => $book)
-                            <option value="{{ $id }}" >{{ $book }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('name'))
-                        <em class="invalid-feedback">
-                            {{ $errors->first('name') }}
-                        </em>
-                    @endif
-                    <p class="helper-block">
-                        {{ trans('cruds.permission.fields.title_helper') }}
-                    </p>
-                </div>
-                <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="name">{{ trans('cruds.chapters.title_singular') }}*</label>
                     <select name="chap_id" id="chap_id" class="form-control select2">
                         @foreach($chapters as $id => $chapter)

@@ -27,9 +27,8 @@ class RulesController extends Controller
         if (! Gate::allows('users_manage')) {
             return abort(401);
         }
-        $books=Book::all()->pluck('name','id')->prepend(trans('global.pleaseSelect'),'');
         $chapters=Chapter::all()->pluck('name','id')->prepend(trans('global.pleaseSelect'),'');
-        return view('admin.rules.create',compact('books','chapters'));
+        return view('admin.rules.create',compact('chapters'));
 
     }
 
@@ -39,17 +38,16 @@ class RulesController extends Controller
         if (! Gate::allows('users_manage')) {
             return abort(401);
         }
-        return $request->name;
+        $image=$request->file('image');
         $rules=new Rule();
-        $rules->name=$request->name;
-        $rules->book_id=$request->book_id;
-        $rules->chap_id=$request->chap_id;
-        if($request->hasFile('image')){
+        if($image!=""){
+            $rules->name=$request->name;
+            $rules->chap_id=$request->chap_id;
             $rules->image=$request->image->store('public/image');
+            $rules->description=$request->description;
+            $rules->save();
+            return redirect()->route('admin.rules.index');
         }
-        $rules->description=$request->description;
-        $rules->save();
-        return redirect()->route('admin.rules.index');
 
     }
 
@@ -69,6 +67,9 @@ class RulesController extends Controller
         if (! Gate::allows('users_manage')) {
             return abort(401);
         }
+        $rule=Rule::find($id);
+        $chapters=Chapter::all()->pluck('name','id')->prepend(trans('global.pleaseSelect'),'');
+        return view('admin.rules.edit',compact('rule','chapters'));
     }
 
 
@@ -77,6 +78,26 @@ class RulesController extends Controller
         if (! Gate::allows('users_manage')) {
             return abort(401);
         }
+        $old_image=$request->old_image;
+        $image=$request->file('image');
+        $rules=Rule::find($id);
+        if($image!=""){
+            $rules->name=$request->name;
+            $rules->chap_id=$request->chap_id;
+            $rules->image=$request->image->store('public/image');
+            $rules->description=$request->description;
+            $rules->save();
+            return redirect()->route('admin.rules.index');
+        }
+        else{
+            $rules->name=$request->name;
+            $rules->chap_id=$request->chap_id;
+            $rules->image=$old_image;
+            $rules->description=$request->description;
+            $rules->save();
+            return redirect()->route('admin.rules.index');
+        }
+
     }
 
     public function destroy($id)
@@ -84,5 +105,8 @@ class RulesController extends Controller
         if (! Gate::allows('users_manage')) {
             return abort(401);
         }
+        $rule=Rule::find($id);
+        $rule->delete();
+        return redirect()->route('admin.rules.index');
     }
 }

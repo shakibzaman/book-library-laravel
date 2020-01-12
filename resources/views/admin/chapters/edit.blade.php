@@ -22,11 +22,26 @@
                         {{ trans('cruds.chapters.fields.name_helper') }}
                     </p>
                 </div>
+
+                <div class="form-group {{ $errors->has('expense_category_id') ? 'has-error' : '' }}">
+                    <label for="book_category">{{ trans('cruds.expense.fields.expense_category') }}</label>
+                    <select name="book_id" id="book_category" class="form-control select2">
+                        @foreach($books as $id => $book)
+                            <option value="{{ $id }}" {{ (isset($book_id) && $book_id->book_id ? $book->book->id : old('book_id')) == $id ? 'selected' : '' }}>{{ $book }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('expense_category_id'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('expense_category_id') }}
+                        </em>
+                    @endif
+                </div>
+
                 <div class="form-group {{ $errors->has('book_id') ? 'has-error' : '' }}">
                     <label for="book_name">{{ trans('cruds.books.title_singular') }}</label>
                     <select name="book_id" id="book_name" class="form-control select2">
                         @foreach($books as $id => $book)
-                            <option value="{{ $id }}" {{ old('name', isset($chapter->bookname) ? $chapter->bookname->name : '') }}>{{ $book }}</option>
+                            <option value="{{ $id }}" {{ old('name', isset($book->book_id) ? $book->book_id->name : '') }}>{{ $book }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('book_id'))
